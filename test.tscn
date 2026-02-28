@@ -2,13 +2,22 @@
 
 [ext_resource type="Script" uid="uid://3ophl5lc8d8w" path="res://receiver.gd" id="1_37kl0"]
 [ext_resource type="Texture2D" uid="uid://cjsb4r3ioymf8" path="res://icon.svg" id="2_8uh7m"]
+[ext_resource type="Script" uid="uid://cesyqqc385m5f" path="res://HandTracker.gd" id="3_6uqi0"]
 
 [node name="Node2D" type="Node2D" unique_id=1763086505]
 
-[node name="Node2D" type="Node2D" parent="." unique_id=734596388]
-
-[node name="thing" type="Node2D" parent="." unique_id=1119043414]
+[node name="thing" type="Node2D" parent="." unique_id=1119043414 node_paths=PackedStringArray("cursor_left", "cursor_right")]
 script = ExtResource("1_37kl0")
+cursor_left = NodePath("Sprite2D")
+cursor_right = NodePath("Sprite2D2")
 
 [node name="Sprite2D" type="Sprite2D" parent="thing" unique_id=888806830]
+position = Vector2(721, 441)
 texture = ExtResource("2_8uh7m")
+
+[node name="Sprite2D2" type="Sprite2D" parent="thing" unique_id=602174255]
+position = Vector2(217, 376)
+texture = ExtResource("2_8uh7m")
+
+[node name="HandTracker" type="Node" parent="thing" unique_id=1214904746]
+script = ExtResource("3_6uqi0")
