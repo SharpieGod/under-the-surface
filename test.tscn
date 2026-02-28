@@ -1,5 +1,14 @@
 [gd_scene format=3 uid="uid://dxi7ji2qrtux3"]
 
+[ext_resource type="Script" uid="uid://3ophl5lc8d8w" path="res://receiver.gd" id="1_37kl0"]
+[ext_resource type="Texture2D" uid="uid://cjsb4r3ioymf8" path="res://icon.svg" id="2_8uh7m"]
+
 [node name="Node2D" type="Node2D" unique_id=1763086505]
 
 [node name="Node2D" type="Node2D" parent="." unique_id=734596388]
+
+[node name="thing" type="Node2D" parent="." unique_id=1119043414]
+script = ExtResource("1_37kl0")
+
+[node name="Sprite2D" type="Sprite2D" parent="thing" unique_id=888806830]
+texture = ExtResource("2_8uh7m")
