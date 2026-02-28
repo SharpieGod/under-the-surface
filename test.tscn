@@ -6,17 +6,16 @@
 
 [node name="Node2D" type="Node2D" unique_id=1763086505]
 
-[node name="thing" type="Node2D" parent="." unique_id=1119043414 node_paths=PackedStringArray("cursor_left", "cursor_right")]
+[node name="thing" type="Node2D" parent="." unique_id=1119043414 node_paths=PackedStringArray("cursor")]
 script = ExtResource("1_37kl0")
-cursor_left = NodePath("Sprite2D")
-cursor_right = NodePath("Sprite2D2")
+cursor = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="thing" unique_id=888806830]
 position = Vector2(721, 441)
 texture = ExtResource("2_8uh7m")
 
 [node name="Sprite2D2" type="Sprite2D" parent="thing" unique_id=602174255]
-position = Vector2(217, 376)
+position = Vector2(911, 198)
 texture = ExtResource("2_8uh7m")
 
 [node name="HandTracker" type="Node" parent="thing" unique_id=1214904746]
