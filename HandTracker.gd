@@ -1,22 +1,23 @@
 extends Node
 
-var _js_callback: JavaScriptObject
+signal hand_updated(hand_index: int, position: Vector2, is_closed: bool)
+signal hand_lost(hand_index: int)
+
 var hand_landmarks: Array = []
+var _last_raw: String = ""
 
 func _ready():
 	if not OS.has_feature("web"):
 		push_warning("Hand tracking only works in Web export!")
 		return
 	_inject_mediapipe_js()
-	_setup_callback()
 
 func _inject_mediapipe_js():
 	JavaScriptBridge.eval("""
-        // Load MediaPipe Hands from CDN
         const script = document.createElement('script');
         script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js';
         script.crossOrigin = 'anonymous';
-        script.onload = () => { window._mediapipeLoaded = true; initHandTracking(); };
+        script.onload = () => { initHandTracking(); };
         document.head.appendChild(script);
 
         const camScript = document.createElement('script');
@@ -24,7 +25,7 @@ func _inject_mediapipe_js():
         camScript.crossOrigin = 'anonymous';
         document.head.appendChild(camScript);
 
-        window._handData = null;
+        window._handData = [];
 
         window.initHandTracking = function() {
             const videoEl = document.createElement('video');
@@ -61,63 +62,60 @@ func _inject_mediapipe_js():
         };
 	""", true)
 
-func _setup_callback():
-	# Create a JS callable that GDScript will poll OR use a JS->GD callback
-	_js_callback = JavaScriptBridge.create_callback(_on_hand_data)
-	JavaScriptBridge.eval("""
-        window._godotHandCallback = null;
-	""", true)
-	# Store reference so JS can call back into Godot
-	JavaScriptBridge.get_interface("window")["_godotHandCallback"] = _js_callback
-
-	# Modify the onResults to also call Godot directly
-	JavaScriptBridge.eval("""
-        window._registerGodotCallback = function() {
-            // Called after init — patch onResults to trigger Godot
-            window._handDataReady = function(data) {
-                if (window._godotHandCallback) {
-                    window._godotHandCallback(JSON.stringify(data));
-                }
-            };
-        };
-        window._registerGodotCallback();
-	""", true)
-
-# Called from JS via the callback
-func _on_hand_data(args: Array):
-	if args.is_empty():
-		return
-	var json = JSON.new()
-	var result = json.parse(args[0])
-	if result == OK:
-		hand_landmarks = json.get_data()
-		_process_hands()
-
-# Fallback: poll every frame if callback isn't firing
 func _process(_delta):
-	var raw = JavaScriptBridge.eval("JSON.stringify(window._handData || [])", true)
-	if raw == null or raw == "null":
+	if not OS.has_feature("web"):
 		return
+
+	var raw = JavaScriptBridge.eval("JSON.stringify(window._handData || [])", true)
+	if raw == null or raw == "null" or raw == _last_raw:
+		return
+
+	var prev_count = hand_landmarks.size()
+	_last_raw = raw
+
 	var json = JSON.new()
-	if json.parse(raw) == OK:
-		hand_landmarks = json.get_data()
-		_process_hands()
+	if json.parse(raw) != OK:
+		return
+
+	hand_landmarks = json.get_data()
+
+	for i in range(hand_landmarks.size(), prev_count):
+		emit_signal("hand_lost", i)
+
+	_process_hands()
 
 func _process_hands():
 	for i in range(hand_landmarks.size()):
 		var landmarks = hand_landmarks[i]
-		# landmarks is an array of 21 points: [{x, y, z}, ...]
-		# Landmark 8 = index fingertip, 4 = thumb tip
 		var index_tip = landmarks[8]
-		var thumb_tip = landmarks[4]
-		print("Hand %d — Index: (%.2f, %.2f) | Thumb: (%.2f, %.2f)" % [
-			i, index_tip.x, index_tip.y, thumb_tip.x, thumb_tip.y
-		])
-		# Convert normalized (0-1) to screen coords:
+
 		var screen_pos = Vector2(
 			index_tip.x * get_viewport().size.x,
 			index_tip.y * get_viewport().size.y
 		)
-		emit_signal("hand_updated", i, screen_pos)
 
-signal hand_updated(hand_index: int, position: Vector2)
+		var closed = _is_hand_closed(landmarks)
+		emit_signal("hand_updated", i, screen_pos, closed)
+
+# Checks how many fingers are curled.
+# For each finger (index, middle, ring, pinky):
+#   if the fingertip Y is BELOW its PIP knuckle Y, the finger is curled.
+#   (Y increases downward in MediaPipe normalized coords)
+# If 3 or more fingers are curled, the hand is considered closed.
+func _is_hand_closed(landmarks: Array) -> bool:
+	# [tip_index, pip_index] for each of the 4 fingers
+	var finger_pairs = [
+		[8,  6],   # Index:  tip, PIP
+		[12, 10],  # Middle: tip, PIP
+		[16, 14],  # Ring:   tip, PIP
+		[20, 18],  # Pinky:  tip, PIP
+	]
+
+	var curled_count = 0
+	for pair in finger_pairs:
+		var tip = landmarks[pair[0]]
+		var pip = landmarks[pair[1]]
+		if tip.y > pip.y:
+			curled_count += 1
+
+	return curled_count >= 3
