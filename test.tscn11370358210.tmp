@@ -45,7 +45,7 @@ position = Vector2(14, 333)
 zoom = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1304297861]
-position = Vector2(-0.9999995, 0.9999695)
+position = Vector2(5.000061, 343)
 scale = Vector2(10.560001, 10.844807)
 shape = SubResource("CircleShape2D_6uqi0")
 
@@ -54,13 +54,8 @@ script = ExtResource("4_ppyta")
 
 [node name="Line2D" type="Line2D" parent="Player/ArmManager" unique_id=964303349]
 points = PackedVector2Array(0, 0, 0, 0)
-width = 50.0
-default_color = Color(0.7782636, 0.40036997, 0.19626772, 1)
 
 [node name="Line2D2" type="Line2D" parent="Player/ArmManager" unique_id=401235590]
-points = PackedVector2Array(0, 0, 0, 0)
-width = 50.0
-default_color = Color(0.7764706, 0.4, 0.19607843, 1)
 
 [node name="Sprite2D2" type="StaticBody2D" parent="." unique_id=1050088718]
 position = Vector2(504, 1125)
