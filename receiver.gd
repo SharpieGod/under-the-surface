@@ -25,7 +25,7 @@ func _screen_to_world(position: Vector2) -> Vector2:
 func _process(delta):
 	if _grab.size() > 0:
 		velocity = Vector2.ZERO
-		
+	
 
 func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	var cursor = cursor_left if is_left else cursor_right
