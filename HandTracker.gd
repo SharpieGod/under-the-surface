@@ -29,7 +29,7 @@ func _inject_mediapipe_js():
 
         window.initHandTracking = function() {
             const videoEl = document.createElement('video');
-            videoEl.style.display = 'none';
+			videoEl.style.display = 'none'
             document.body.appendChild(videoEl);
 
             const hands = new Hands({
