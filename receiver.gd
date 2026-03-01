@@ -33,8 +33,6 @@ func _process(delta):
 		velocity = Vector2.ZERO
 	move_and_slide()
 	
-	print(torso.position)
-	
 
 func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	var cursor = cursor_left if is_left else cursor_right
@@ -65,12 +63,13 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	
 	if cast.is_colliding():
 		for i in cast.get_collision_count():
-			if cast.get_collider(i) is TileMapLayer:
+			if cast.get_collider(i).name == "Foreground":
+				print("In wall!!")
 				in_wall = true
 				break
 	
-	if is_closed and not in_wall:
-		if not was_closed:
+	if is_closed:
+		if not was_closed and not in_wall:
 			_grab[is_left] = {
 				"anchor_screen": smoothed,
 				"anchor_self": global_position
