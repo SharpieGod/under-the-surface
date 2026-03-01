@@ -1,23 +1,39 @@
 [gd_scene format=3 uid="uid://dxi7ji2qrtux3"]
 
 [ext_resource type="Script" uid="uid://3ophl5lc8d8w" path="res://receiver.gd" id="1_37kl0"]
+[ext_resource type="Texture2D" uid="uid://6cwv0vg0de4y" path="res://box.png" id="1_ykrsh"]
 [ext_resource type="Texture2D" uid="uid://cjsb4r3ioymf8" path="res://icon.svg" id="2_8uh7m"]
 [ext_resource type="Script" uid="uid://cesyqqc385m5f" path="res://HandTracker.gd" id="3_6uqi0"]
 [ext_resource type="Script" uid="uid://bmeaaepp5858e" path="res://arm_manager.gd" id="4_ppyta"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6uqi0"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g14j6"]
+size = Vector2(15.33622, 15.317852)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6uqi0"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_6uqi0"]
 
 [node name="Node2D" type="Node2D" unique_id=1763086505]
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1970679373]
-position = Vector2(514, 278)
-scale = Vector2(9.959996, 9.959996)
-texture = ExtResource("2_8uh7m")
+[node name="Background" type="Sprite2D" parent="." unique_id=387740824]
+modulate = Color(0.36, 0, 0, 1)
+position = Vector2(-154, -24927)
+scale = Vector2(24836.146, 58639.063)
+texture = ExtResource("1_ykrsh")
+
+[node name="Wall" type="StaticBody2D" parent="." unique_id=1508608239]
+position = Vector2(775.0001, -226.00003)
+scale = Vector2(831.22534, 831.22534)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall" unique_id=1169385268]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall" unique_id=1133050313]
+texture = ExtResource("1_ykrsh")
 
 [node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1082793705]
-position = Vector2(-1163, -487)
+position = Vector2(-918, -1314.0001)
 scale = Vector2(9.959996, 9.959996)
 texture = ExtResource("2_8uh7m")
 
@@ -62,13 +78,16 @@ points = PackedVector2Array(0, 0, 0, 0)
 width = 50.0
 default_color = Color(0.7764706, 0.4, 0.19607843, 1)
 
-[node name="Sprite2D2" type="StaticBody2D" parent="." unique_id=1050088718]
-position = Vector2(504, 1125)
-scale = Vector2(61.858044, 1.433579)
+[node name="Wall2" type="StaticBody2D" parent="." unique_id=1419466559]
+position = Vector2(122.000015, 1651)
+scale = Vector2(9633.882, 2985.9236)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D2" unique_id=1152704816]
-scale = Vector2(5.280001, 5.280001)
-shape = SubResource("RectangleShape2D_6uqi0")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2" unique_id=576300158]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
 
-[node name="Sprite2D" type="Sprite2D" parent="Sprite2D2" unique_id=133258433]
-texture = ExtResource("2_8uh7m")
+[node name="Sprite2D" type="Sprite2D" parent="Wall2" unique_id=1265506919]
+modulate = Color(0.28, 0.100146666, 0.016800001, 1)
+texture = ExtResource("1_ykrsh")
