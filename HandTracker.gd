@@ -39,9 +39,9 @@ func _inject_mediapipe_js():
 
             hands.setOptions({
                 maxNumHands: 2,
-                modelComplexity: 1,
-                minDetectionConfidence: 0.85,
-                minTrackingConfidence: 0.8
+                modelComplexity: 3,
+                minDetectionConfidence: 0.7,
+                minTrackingConfidence: 0.7
             });
 
             hands.onResults((results) => {

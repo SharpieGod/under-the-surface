@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://dy3hh2fwex1of"]
+
+[ext_resource type="Texture2D" uid="uid://6cwv0vg0de4y" path="res://box.png" id="1_x4ggo"]
+[ext_resource type="Texture2D" uid="uid://cjsb4r3ioymf8" path="res://icon.svg" id="2_siop2"]
+[ext_resource type="Script" uid="uid://3ophl5lc8d8w" path="res://receiver.gd" id="3_uiav5"]
+[ext_resource type="Script" uid="uid://cesyqqc385m5f" path="res://HandTracker.gd" id="4_x4pud"]
+[ext_resource type="Script" uid="uid://bmeaaepp5858e" path="res://arm_manager.gd" id="5_tefqq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g14j6"]
+size = Vector2(15.33622, 15.317852)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6uqi0"]
+
+[node name="Node2D" type="Node2D" unique_id=1763086505]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=387740824]
+modulate = Color(0.36, 0, 0, 1)
+position = Vector2(-154, -24927)
+scale = Vector2(24836.146, 58639.063)
+texture = ExtResource("1_x4ggo")
+
+[node name="Wall" type="StaticBody2D" parent="." unique_id=1508608239]
+position = Vector2(775.0001, -226.00003)
+scale = Vector2(831.22534, 831.22534)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall" unique_id=1169385268]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall" unique_id=1133050313]
+texture = ExtResource("1_x4ggo")
+
+[node name="Wall3" type="StaticBody2D" parent="." unique_id=22348273]
+position = Vector2(775.0001, -226.00003)
+scale = Vector2(831.22534, 831.22534)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3" unique_id=1752162705]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall3" unique_id=1512212587]
+texture = ExtResource("1_x4ggo")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1082793705]
+position = Vector2(-918, -1314.0001)
+scale = Vector2(9.959996, 9.959996)
+texture = ExtResource("2_siop2")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1561835576]
+position = Vector2(833, -2176)
+scale = Vector2(9.959996, 9.959996)
+texture = ExtResource("2_siop2")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=372836337 node_paths=PackedStringArray("cursor_left", "cursor_right")]
+script = ExtResource("3_uiav5")
+cursor_left = NodePath("Left Hand")
+cursor_right = NodePath("Right Hand")
+
+[node name="Left Hand" type="Sprite2D" parent="Player" unique_id=888806830]
+texture = ExtResource("2_siop2")
+
+[node name="Right Hand" type="Sprite2D" parent="Player" unique_id=602174255]
+texture = ExtResource("2_siop2")
+
+[node name="HandTracker" type="Node" parent="Player" unique_id=1214904746]
+script = ExtResource("4_x4pud")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=13526368]
+position = Vector2(14, 333)
+zoom = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1304297861]
+position = Vector2(-0.9999995, 0.9999695)
+scale = Vector2(10.560001, 10.844807)
+shape = SubResource("CircleShape2D_6uqi0")
+
+[node name="ArmManager" type="Node2D" parent="Player" unique_id=615851955]
+script = ExtResource("5_tefqq")
+
+[node name="Line2D" type="Line2D" parent="Player/ArmManager" unique_id=964303349]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 50.0
+default_color = Color(0.7782636, 0.40036997, 0.19626772, 1)
+
+[node name="Line2D2" type="Line2D" parent="Player/ArmManager" unique_id=401235590]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 50.0
+default_color = Color(0.7764706, 0.4, 0.19607843, 1)
+
+[node name="Wall2" type="StaticBody2D" parent="." unique_id=1419466559]
+position = Vector2(122.000015, 1651)
+scale = Vector2(9633.882, 2985.9236)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2" unique_id=576300158]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall2" unique_id=1265506919]
+modulate = Color(0.28, 0.100146666, 0.016800001, 1)
+texture = ExtResource("1_x4ggo")
