@@ -11,36 +11,27 @@ extends Node2D
 @onready var armL: Line2D = $Line2D
 @onready var armR: Line2D = $Line2D2
 
+@export var len1: float = 300.0
+@export var len2: float = 300.0
+@export var bend_direction: float = 1.0
+
 func _process(delta: float) -> void:
-	handle_grapple(delta)
-
-func handle_grapple(delta: float) -> void:
-	#var target_dir_l: Vector2 = player.global_position.direction_to(L.global_position)
-	#var target_dist_l: float = player.global_position.distance_to(L.global_position)
-	#
-	#var target_dir_r: Vector2 = player.global_position.direction_to(R.global_position)
-	#var target_dist_r: float = player.global_position.distance_to(R.global_position)
-
-	#var displacement: float = target_dist - rest_length
-	#
-	#var force: Vector2 = Vector2.ZERO
-#
-	#if displacement > 0:
-		#var spring_force_magnitude: float = stiffness * displacement
-		#var spring_force: Vector2 = target_dir * spring_force_magnitude
-		#
-		#var vel_dot: float = player.velocity.dot(target_dir)
-		#
-		#var damping_force: Vector2 = -damping * vel_dot * target_dir
-		#
-		#force = spring_force + damping_force
-
-	#player.velocity += force * delta
-	
 	update_rope()
-
+	
 func update_rope():
-	armL.set_point_position(0, armL.to_local(L_start.global_position))
+	var R_elbow = solve_ik(R.global_position, R_start.global_position, len1, len2, bend_direction)
 	armR.set_point_position(0, armR.to_local(R_start.global_position))
-	armL.set_point_position(1, armL.to_local(L.global_position))
-	armR.set_point_position(1, armR.to_local(R.global_position))
+	armR.set_point_position(1, armR.to_local(R_elbow))
+	armR.set_point_position(2, armR.to_local(R.global_position))
+	
+	var L_elbow = solve_ik(L.global_position, L_start.global_position, len1, len2, -bend_direction)
+	armL.set_point_position(0, armL.to_local(L_start.global_position))
+	armL.set_point_position(1, armL.to_local(L_elbow))
+	armL.set_point_position(2, armL.to_local(L.global_position))
+
+func solve_ik(a: Vector2, b: Vector2, len1: float, len2: float, bend_direction: float = 1.0) -> Vector2:
+	var dist = clamp(a.distance_to(b), abs(len1 - len2), len1 + len2)
+	var angle_a = acos((dist * dist + len1 * len1 - len2 * len2) / (2 * dist * len1))
+	var angle_to_b = a.angle_to_point(b)
+	var elbow_angle = angle_to_b + angle_a * bend_direction
+	return a + Vector2(cos(elbow_angle), sin(elbow_angle)) * len1

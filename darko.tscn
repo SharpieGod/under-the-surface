@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://3ophl5lc8d8w" path="res://receiver.gd" id="2_2572e"]
 [ext_resource type="Texture2D" uid="uid://cjsb4r3ioymf8" path="res://icon.svg" id="3_r0a8b"]
 [ext_resource type="Script" uid="uid://cesyqqc385m5f" path="res://HandTracker.gd" id="4_as6rc"]
+[ext_resource type="Script" uid="uid://bmeaaepp5858e" path="res://arm_manager.gd" id="5_e11kw"]
 [ext_resource type="Texture2D" uid="uid://6cwv0vg0de4y" path="res://box.png" id="6_xqlu0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2ub5a"]
@@ -139,6 +140,23 @@ texture = ExtResource("3_r0a8b")
 scale = Vector2(6.4791236, 6.3357153)
 shape = SubResource("CircleShape2D_2572e")
 target_position = Vector2(0, 0)
+
+[node name="ArmManager" type="Node2D" parent="Player" unique_id=1511799036 node_paths=PackedStringArray("L", "R", "L_start", "R_start")]
+script = ExtResource("5_e11kw")
+L = NodePath("../Left Hand")
+R = NodePath("../Right Hand")
+L_start = NodePath("../Torso/R Start")
+R_start = NodePath("../Torso/L Start")
+
+[node name="Line2D" type="Line2D" parent="Player/ArmManager" unique_id=1276704939]
+points = PackedVector2Array(0, 0, 0, 0, 0, 0)
+width = 50.0
+default_color = Color(0.7782636, 0.40036997, 0.19626772, 1)
+
+[node name="Line2D2" type="Line2D" parent="Player/ArmManager" unique_id=1727283143]
+points = PackedVector2Array(0, 0, 0, 0, 0, 0)
+width = 50.0
+default_color = Color(0.7764706, 0.4, 0.19607843, 1)
 
 [node name="HandTracker" type="Node" parent="Player" unique_id=415470971]
 script = ExtResource("4_as6rc")
