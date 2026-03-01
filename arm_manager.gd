@@ -22,13 +22,15 @@ func update_rope():
 	var R_elbow = solve_ik(R.global_position, R_start.global_position, len1, len2, bend_direction)
 	armR.set_point_position(0, armR.to_local(R_start.global_position))
 	armR.set_point_position(1, armR.to_local(R_elbow))
-	armR.set_point_position(2, armR.to_local(R.global_position))
+	armR.set_point_position(2, armR.to_local((R.global_position - R_start.global_position) * 0.95 + R_start.global_position))
+	R.rotation = (R.global_position - R_elbow).angle() + deg_to_rad(91)
 	
 	var L_elbow = solve_ik(L.global_position, L_start.global_position, len1, len2, -bend_direction)
 	armL.set_point_position(0, armL.to_local(L_start.global_position))
 	armL.set_point_position(1, armL.to_local(L_elbow))
-	armL.set_point_position(2, armL.to_local(L.global_position))
-
+	armL.set_point_position(2, armL.to_local((L.global_position - L_start.global_position) * 0.95 + L_start.global_position))
+	L.rotation = (L.global_position - L_elbow).angle() + deg_to_rad(91)
+	
 func solve_ik(a: Vector2, b: Vector2, len1: float, len2: float, bend_direction: float = 1.0) -> Vector2:
 	var dist = clamp(a.distance_to(b), abs(len1 - len2), len1 + len2)
 	var angle_a = acos((dist * dist + len1 * len1 - len2 * len2) / (2 * dist * len1))

@@ -10,6 +10,14 @@ extends CharacterBody2D
 @onready var torso = $Torso
 @export var L_cast: ShapeCast2D
 @export var R_cast: ShapeCast2D
+@onready var R_start = $"Torso/R Start"
+@onready var L_start = $"Torso/L Start"
+
+@export var R_open: Texture2D
+@export var R_closed: Texture2D
+@export var L_open: Texture2D
+@export var L_closed: Texture2D
+
 
 var _prev_closed: Dictionary = { true: false, false: false }
 var _smoothed_positions: Dictionary = {}
@@ -37,7 +45,7 @@ func _process(delta):
 func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	var cursor = cursor_left if not is_left else cursor_right
 	var cast = L_cast if is_left else R_cast
-	
+	var start = L_start if is_left else R_start
 	if not cursor:
 		return
 
@@ -50,8 +58,8 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	else:
 		smoothed = world_pos
 		
-	if smoothed.length() > 600:
-		smoothed = smoothed.normalized() * 600
+	if (smoothed - start.position).length() > 600:
+		smoothed = (smoothed - start.position).normalized() * 600 + start
 		
 	_smoothed_positions[is_left] = smoothed
 
@@ -73,14 +81,13 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 				"anchor_screen": smoothed,
 				"anchor_self": global_position
 			}
-			
-			var particle_instance = grab_particle.instatiate()
-			get_tree().current_scene.add_child(particle_instance)
-			particle_instance.global_position = cursor.global_position 
-			particle_instance.emitting = true
-			get_tree().create_timer(particle_instance.lifetime * particle_instance.amount_ratio + 0.1).timeout.connect(particle_instance.queue_free)
-			
-			
+			if randi_range(0,2) == 1:
+				var particle_instance = grab_particle.duplicate()
+				get_tree().current_scene.add_child(particle_instance)
+				particle_instance.global_position = cursor.global_position 
+				particle_instance.emitting = true
+				get_tree().create_timer(particle_instance.lifetime * particle_instance.amount_ratio + 0.1).timeout.connect(particle_instance.queue_free)
+				
 		if is_left in _grab:
 			var delta = smoothed - _grab[is_left]["anchor_screen"]
 			var desired_pos = _grab[is_left]["anchor_self"] - delta
@@ -92,7 +99,7 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 		_grab.erase(is_left)
 
 	_prev_closed[is_left] = is_closed
-	_update_cursor_state(cursor, is_closed)
+	_update_cursor_state(cursor, is_left, is_closed)
 
 func _on_hand_lost(is_left: bool):
 	var cursor = cursor_left if is_left else cursor_right
@@ -102,5 +109,8 @@ func _on_hand_lost(is_left: bool):
 	_smoothed_positions.erase(is_left)
 	_prev_closed[is_left] = false
 
-func _update_cursor_state(cursor: Node2D, is_closed: bool):
-	cursor.scale = Vector2(15, 15) if is_closed else Vector2(20, 20)
+func _update_cursor_state(cursor: Node2D, is_left, is_closed: bool):
+	cursor.scale = Vector2(15, 15)
+	var closed = L_closed if is_left else R_closed
+	var open = L_open if is_left else R_open
+	cursor.texture = closed if not is_closed else open

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ck5vr8it44i4n"
-path="res://.godot/imported/sprite_1.png-b5d80102c45fdb697fe50fe368fd974a.ctex"
+uid="uid://cjlcnvl5eccgb"
+path="res://.godot/imported/sprite_6.png-8ad662768649f4982ab293ff30d73c64.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dude/sprite_1.png"
-dest_files=["res://.godot/imported/sprite_1.png-b5d80102c45fdb697fe50fe368fd974a.ctex"]
+source_file="res://dude_jacked_with_Aura/sprite_6.png"
+dest_files=["res://.godot/imported/sprite_6.png-8ad662768649f4982ab293ff30d73c64.ctex"]
 
 [params]
 

@@ -2,12 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://3u1ql4quq38h" path="res://platformertiles (1).png" id="1_ymmnx"]
 [ext_resource type="Script" uid="uid://3ophl5lc8d8w" path="res://receiver.gd" id="2_2572e"]
-[ext_resource type="Texture2D" uid="uid://cjsb4r3ioymf8" path="res://icon.svg" id="3_r0a8b"]
 [ext_resource type="Texture2D" uid="uid://b28dftnmesr0k" path="res://rock_particle.png" id="4_2572e"]
 [ext_resource type="Script" uid="uid://cesyqqc385m5f" path="res://HandTracker.gd" id="4_as6rc"]
 [ext_resource type="Script" uid="uid://bmeaaepp5858e" path="res://arm_manager.gd" id="5_e11kw"]
-[ext_resource type="Texture2D" uid="uid://btnynuew6i7t3" path="res://dude (2)/sprite_1.png" id="6_r0a8b"]
-[ext_resource type="Texture2D" uid="uid://byp5xmba8d0uo" path="res://dude.png" id="8_r0a8b"]
+[ext_resource type="Texture2D" uid="uid://defjvr7jad2bo" path="res://dude_jacked_with_Aura/sprite_4.png" id="5_genal"]
+[ext_resource type="Texture2D" uid="uid://brwwnx02m5cnv" path="res://dudes_arm (1)/sprite_1.png" id="5_r0a8b"]
+[ext_resource type="Texture2D" uid="uid://cdr56rfursomq" path="res://dudes_arm (1)/sprite_0.png" id="6_r0a8b"]
+[ext_resource type="Texture2D" uid="uid://dis3rvk3nmotl" path="res://dude_jacked_with_Aura/sprite_2.png" id="7_e11kw"]
+[ext_resource type="Texture2D" uid="uid://b1ir24evvhsgt" path="res://dude_jacked_with_Aura/sprite_5.png" id="7_qkr4e"]
+[ext_resource type="Texture2D" uid="uid://cfeis8vrrmfx4" path="res://dude_jacked_with_Aura/sprite_3.png" id="8_xqlu0"]
+[ext_resource type="Texture2D" uid="uid://dfbax4tdhcbm6" path="res://dude_67.png" id="10_e11kw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2ub5a"]
 texture = ExtResource("1_ymmnx")
@@ -128,19 +132,7 @@ turbulence_initial_displacement_max = 100.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ymmnx"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r0a8b"]
-atlas = ExtResource("8_r0a8b")
-region = Rect2(30, 157, 4, 5)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_2572e"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e11kw"]
-atlas = ExtResource("8_r0a8b")
-region = Rect2(94, 93, 4, 5)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_as6rc"]
-atlas = ExtResource("8_r0a8b")
-region = Rect2(88, 142, 15, 36)
 
 [node name="Node2D" type="Node2D" unique_id=1763086505]
 
@@ -174,6 +166,10 @@ cursor_left = NodePath("Right Hand")
 cursor_right = NodePath("Left Hand")
 L_cast = NodePath("Left Hand/Cast L")
 R_cast = NodePath("Right Hand/Cast R")
+R_open = ExtResource("7_e11kw")
+R_closed = ExtResource("7_qkr4e")
+L_open = ExtResource("8_xqlu0")
+L_closed = ExtResource("5_genal")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1688917699]
 position = Vector2(0, -61)
@@ -192,22 +188,23 @@ position = Vector2(163.00002, 107)
 rotation = -0.018177986
 scale = Vector2(-1, -1)
 points = PackedVector2Array(53.627502, -34.03084, 143.59454, 23.614025, 338.0351, 1.1445866)
-width = 80.0
-texture = ExtResource("6_r0a8b")
+width = 180.0
+texture = ExtResource("5_r0a8b")
 texture_mode = 2
+joint_mode = 1
 
 [node name="Line2D2" type="Line2D" parent="Player/ArmManager" unique_id=1727283143]
 position = Vector2(323, -50)
 points = PackedVector2Array(0, 0, 50, 50, 0, 0)
-width = 80.0
-default_color = Color(0.7764706, 0.4, 0.19607843, 1)
-texture = ExtResource("3_r0a8b")
+width = 180.0
+texture = ExtResource("6_r0a8b")
 texture_mode = 2
+joint_mode = 1
 
 [node name="Left Hand" type="Sprite2D" parent="Player" unique_id=1509126014]
-position = Vector2(-206, -210)
+position = Vector2(384.00006, -210)
 scale = Vector2(14.365295, 14.365295)
-texture = SubResource("AtlasTexture_r0a8b")
+texture = ExtResource("8_xqlu0")
 
 [node name="Cast L" type="ShapeCast2D" parent="Player/Left Hand" unique_id=1742481431]
 scale = Vector2(0.15029943, 0.14697272)
@@ -215,9 +212,9 @@ shape = SubResource("CircleShape2D_2572e")
 target_position = Vector2(0, 0)
 
 [node name="Right Hand" type="Sprite2D" parent="Player" unique_id=520437308]
-position = Vector2(233, -211)
+position = Vector2(-353, -210)
 scale = Vector2(15, 15)
-texture = SubResource("AtlasTexture_e11kw")
+texture = ExtResource("7_e11kw")
 
 [node name="Cast R" type="ShapeCast2D" parent="Player/Right Hand" unique_id=6372821]
 scale = Vector2(0.15, 0.147)
@@ -233,14 +230,15 @@ zoom = Vector2(0.5, 0.5)
 
 [node name="Torso" type="Node2D" parent="Player" unique_id=1581721886]
 position = Vector2(2, 28)
-scale = Vector2(1.2733257, 1.2733257)
+scale = Vector2(1.6431068, 1.6431068)
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/Torso" unique_id=1892306877]
-scale = Vector2(15.025785, 15.025785)
-texture = SubResource("AtlasTexture_as6rc")
+position = Vector2(8.638795, 101.30951)
+scale = Vector2(8.456959, 8.456959)
+texture = ExtResource("10_e11kw")
 
 [node name="R Start" type="Node2D" parent="Player/Torso" unique_id=518352256]
-position = Vector2(-92, -133)
+position = Vector2(-57.817295, -107.11415)
 
 [node name="L Start" type="Node2D" parent="Player/Torso" unique_id=1578895886]
-position = Vector2(93, -133)
+position = Vector2(68.16354, -107.11416)
