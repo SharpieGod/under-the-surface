@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var tracker = $HandTracker
 @onready var camera = $Camera2D
-
+@onready var grab_particle = $"../Grab Particle"
 @export var cursor_left: Node2D
 @export var cursor_right: Node2D
 @export var max_speed: float = 100.0
@@ -35,7 +35,7 @@ func _process(delta):
 	
 
 func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
-	var cursor = cursor_left if is_left else cursor_right
+	var cursor = cursor_left if not is_left else cursor_right
 	var cast = L_cast if is_left else R_cast
 	
 	if not cursor:
@@ -64,7 +64,6 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	if cast.is_colliding():
 		for i in cast.get_collision_count():
 			if cast.get_collider(i).name == "Foreground":
-				print("In wall!!")
 				in_wall = true
 				break
 	
@@ -74,6 +73,14 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 				"anchor_screen": smoothed,
 				"anchor_self": global_position
 			}
+			
+			var particle_instance = grab_particle.instatiate()
+			get_tree().current_scene.add_child(particle_instance)
+			particle_instance.global_position = cursor.global_position 
+			particle_instance.emitting = true
+			get_tree().create_timer(particle_instance.lifetime * particle_instance.amount_ratio + 0.1).timeout.connect(particle_instance.queue_free)
+			
+			
 		if is_left in _grab:
 			var delta = smoothed - _grab[is_left]["anchor_screen"]
 			var desired_pos = _grab[is_left]["anchor_self"] - delta
@@ -96,4 +103,4 @@ func _on_hand_lost(is_left: bool):
 	_prev_closed[is_left] = false
 
 func _update_cursor_state(cursor: Node2D, is_closed: bool):
-	cursor.scale = Vector2(0.2, 0.2) if is_closed else Vector2(1.2, 1.2)
+	cursor.scale = Vector2(15, 15) if is_closed else Vector2(20, 20)

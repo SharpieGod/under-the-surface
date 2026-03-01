@@ -19,12 +19,12 @@ func _process(delta: float) -> void:
 	update_rope()
 	
 func update_rope():
-	var R_elbow = solve_ik(R.global_position, R_start.global_position, len1, len2, -bend_direction)
+	var R_elbow = solve_ik(R.global_position, R_start.global_position, len1, len2, bend_direction)
 	armR.set_point_position(0, armR.to_local(R_start.global_position))
 	armR.set_point_position(1, armR.to_local(R_elbow))
 	armR.set_point_position(2, armR.to_local(R.global_position))
 	
-	var L_elbow = solve_ik(L.global_position, L_start.global_position, len1, len2, bend_direction)
+	var L_elbow = solve_ik(L.global_position, L_start.global_position, len1, len2, -bend_direction)
 	armL.set_point_position(0, armL.to_local(L_start.global_position))
 	armL.set_point_position(1, armL.to_local(L_elbow))
 	armL.set_point_position(2, armL.to_local(L.global_position))

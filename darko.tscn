@@ -1,11 +1,13 @@
-[gd_scene format=4 uid="uid://tpbjuy63ypa"]
+[gd_scene format=4 uid="uid://baj2hapdg7q8p"]
 
 [ext_resource type="Texture2D" uid="uid://3u1ql4quq38h" path="res://platformertiles (1).png" id="1_ymmnx"]
 [ext_resource type="Script" uid="uid://3ophl5lc8d8w" path="res://receiver.gd" id="2_2572e"]
 [ext_resource type="Texture2D" uid="uid://cjsb4r3ioymf8" path="res://icon.svg" id="3_r0a8b"]
+[ext_resource type="Texture2D" uid="uid://b28dftnmesr0k" path="res://rock_particle.png" id="4_2572e"]
 [ext_resource type="Script" uid="uid://cesyqqc385m5f" path="res://HandTracker.gd" id="4_as6rc"]
 [ext_resource type="Script" uid="uid://bmeaaepp5858e" path="res://arm_manager.gd" id="5_e11kw"]
-[ext_resource type="Texture2D" uid="uid://6cwv0vg0de4y" path="res://box.png" id="6_xqlu0"]
+[ext_resource type="Texture2D" uid="uid://btnynuew6i7t3" path="res://dude (2)/sprite_1.png" id="6_r0a8b"]
+[ext_resource type="Texture2D" uid="uid://byp5xmba8d0uo" path="res://dude.png" id="8_r0a8b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2ub5a"]
 texture = ExtResource("1_ymmnx")
@@ -93,7 +95,12 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_mq32o")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2572e"]
+[sub_resource type="Curve" id="Curve_ymmnx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.4301075, 0.23042512), -1.0633855, -1.0633855, 0, 0, Vector2(0.9892473, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2572e"]
+curve = SubResource("Curve_ymmnx")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ymmnx"]
 particle_flag_disable_z = true
@@ -102,11 +109,16 @@ emission_shape = 1
 emission_sphere_radius = 50.0
 angle_min = -257.69998
 angle_max = 87.80001
-direction = Vector3(1, 1, 0)
-spread = 90.0
-initial_velocity_min = 500.0
-initial_velocity_max = 500.0
-gravity = Vector3(0, 1000, 0)
+direction = Vector3(0, 1, 0)
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 450.0
+initial_velocity_max = 1000.0
+gravity = Vector3(0, 5000, 0)
+attractor_interaction_enabled = false
+scale_min = 25.0
+scale_max = 35.0
+scale_curve = SubResource("CurveTexture_2572e")
 turbulence_noise_strength = 14.07
 turbulence_noise_speed_random = 3.8
 turbulence_influence_min = 1.0
@@ -115,6 +127,20 @@ turbulence_initial_displacement_min = 100.0
 turbulence_initial_displacement_max = 100.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ymmnx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0a8b"]
+atlas = ExtResource("8_r0a8b")
+region = Rect2(30, 157, 4, 5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2572e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e11kw"]
+atlas = ExtResource("8_r0a8b")
+region = Rect2(94, 93, 4, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_as6rc"]
+atlas = ExtResource("8_r0a8b")
+region = Rect2(88, 142, 15, 36)
 
 [node name="Node2D" type="Node2D" unique_id=1763086505]
 
@@ -131,76 +157,87 @@ scale = Vector2(21.583864, 21.583864)
 tile_map_data = PackedByteArray("AAAAAAIAAQAHAAAAADAAAAMAAQACAAEAAAAAAAQAAQAFAAAAAAD//wQAAQABAAEAAAD+/wQAAQABAAEAAAD9/wQAAQABAAEAAAD8/wQAAQABAAEAAAD7/wQAAQABAAEAAAD6/wQAAQABAAEAAAD7/wMAAQABAAEAAAD8/wMAAQABAAEAAAD9/wMAAQABAAEAAAD+/wMAAQABAAEAAAD//wMAAQABAAEAAAD//wIAAQABAAEAAAD+/wIAAQABAAEAAAD9/wIAAQABAAEAAAD8/wIAAQABAAEAAAD7/wIAAQABAAEAAAD6/wIAAQABAAEAAAABAAEAAQACAAAAAAABAAIAAQACAAIAAAAAAAEAAQABAAAAAAD//wEAAQABAAAAAAD+/wEAAQABAAAAAAD9/wEAAQABAAAAAAD8/wEAAQABAAAAAAD7/wgAAQABAAEAAAD7/wcAAQABAAEAAAD7/wYAAQABAAEAAAD7/wUAAQABAAEAAAD8/wgAAQABAAEAAAD9/wgAAQABAAEAAAD+/wgAAQABAAEAAAD//wgAAQABAAEAAAAAAAgAAQABAAEAAAABAAgAAQABAAEAAAACAAgAAQABAAEAAAADAAgAAQABAAEAAAAEAAgAAQABAAEAAAAFAAgAAQABAAEAAAAGAAgAAQABAAEAAAAHAAgAAQABAAEAAAAIAAgAAQABAAEAAAAJAAgAAQABAAEAAAAJAAcAAQABAAEAAAAJAAYAAQABAAEAAAAJAAUAAQABAAEAAAAJAAQAAQABAAAAAAAIAAQAAQABAAAAAAAGAAQAAQABAAAAAAAFAAQAAQAHAAAAAAAEAAQAAQABAAAAAAADAAQAAQABAAAAAAACAAQAAQABAAAAAAABAAQAAQABAAAAAAD6/wUAAQABAAEAAAD6/wYAAQABAAEAAAD6/wcAAQABAAEAAAD6/wgAAQABAAEAAAD8/wUAAQABAAEAAAD8/wYAAQABAAEAAAD8/wcAAQABAAEAAAD9/wUAAQABAAEAAAD9/wYAAQABAAEAAAD9/wcAAQABAAEAAAD+/wUAAQABAAEAAAD+/wYAAQABAAEAAAD+/wcAAQABAAEAAAD//wUAAQABAAEAAAD//wYAAQABAAEAAAD//wcAAQABAAEAAAAAAAUAAQABAAEAAAAAAAYAAQABAAEAAAAAAAcAAQABAAEAAAABAAUAAQABAAEAAAABAAYAAQABAAEAAAABAAcAAQABAAEAAAACAAUAAQABAAEAAAACAAYAAQABAAEAAAACAAcAAQABAAEAAAADAAUAAQABAAEAAAADAAYAAQABAAEAAAADAAcAAQABAAEAAAAEAAUAAQABAAEAAAAEAAYAAQABAAEAAAAEAAcAAQABAAEAAAAFAAUAAQABAAEAAAAFAAYAAQABAAEAAAAFAAcAAQABAAEAAAAGAAUAAQABAAEAAAAGAAYAAQABAAEAAAAGAAcAAQABAAEAAAAHAAUAAQABAAEAAAAHAAYAAQABAAEAAAAHAAcAAQABAAEAAAAIAAUAAQABAAEAAAAIAAYAAQABAAEAAAAIAAcAAQABAAEAAAAKAAUAAQABAAEAAAAKAAYAAQABAAEAAAAKAAcAAQABAAEAAAAKAAgAAQABAAEAAAALAAUAAQABAAEAAAALAAYAAQABAAEAAAALAAcAAQABAAEAAAALAAgAAQABAAEAAAAHAAQAAQABAAAAAAAKAAQAAQABAAAAAAALAAQAAQABAAAAAAAMAAQAAQABAAAAAAANAAQAAQABAAAAAAAOAAQAAQABAAAAAAAPAAQAAQABAAAAAAAQAAQAAQABAAAAAAD7//7/AQACAAEAAAD7////AQACAAEAAAD7/wAAAQACAAEAAAD7//v/AQACAAEAAAD7//z/AQACAAEAAAD7//3/AQACAAEAAAD7//r/AQACAAAAAAD6//r/AQABAAAAAAD5//n/AQACAAAAAAAFAAMAAQAAAAEAAAAEAAIAAQAEAAAAAGAFAAEAAQAAAAEAAAAFAAAAAQAAAAEAAAAEAP7/AQAAAAEAAAAEAP//AQAAAAIAAAAFAP//AQAHAAAAAGAEAP3/AQAAAAEAAAAEAPz/AQAAAAEAAAAEAPv/AQAAAAEAAAAEAPr/AQAAAAAAAAAFAPn/AQAAAAAAAAAGAPj/AQAAAAEAAAAGAPf/AQAAAAEAAAAGAPb/AQAAAAEAAAAGAPX/AQAAAAEAAAAGAPT/AQAAAAEAAAAGAPP/AQAAAAEAAAD3//j/AQACAAAAAAD2//j/AQABAAAAAAD1//j/AQABAAAAAAD0//j/AQAHAAAAAFD4//n/AQABAAAAAAD1//b/AQACAAIAAAD0//f/AQACAAEAAAD3//n/AQAHAAAAAFD5//r/AQAHAAAAAFD7/wEAAQAFAAAAAAAFAAIAAQAGAAAAAGD0//n/AQABAAEAAAD1//n/AQABAAEAAAD2//n/AQABAAEAAAD2//r/AQABAAEAAAD3//r/AQABAAEAAAD3//v/AQABAAEAAAD4//r/AQABAAEAAAD4//v/AQABAAEAAAD5//v/AQABAAEAAAD6//v/AQABAAEAAAD6//z/AQABAAEAAAD6//3/AQABAAEAAAD6//7/AQABAAEAAAD5//7/AQABAAEAAAD4//7/AQABAAEAAAD4//3/AQABAAEAAAD3//3/AQABAAEAAAD3//z/AQABAAEAAAD2//3/AQABAAEAAAD4//z/AQABAAEAAAD5//3/AQABAAEAAAD2//z/AQABAAEAAAD5//z/AQABAAEAAAD1//v/AQABAAEAAAD0//r/AQABAAEAAAD1//r/AQABAAEAAAD1//z/AQABAAEAAAD2//v/AQABAAEAAAD1//3/AQABAAEAAAD0//v/AQABAAEAAAD0//z/AQABAAEAAAD1//7/AQABAAEAAAD0//7/AQABAAEAAAD2//7/AQABAAEAAAD3//7/AQABAAEAAAD0//3/AQABAAEAAAD///7/AQAAAAIAAAD///z/AQAAAAEAAAD///3/AQAAAAEAAAD9//v/AQAAAAIAAAD+//v/AQABAAIAAAD///v/AQAHAAAAAGD9//r/AQAAAAEAAAD9//n/AQAAAAEAAAD8//f/AQAAAAIAAAD7//b/AQAAAAIAAAD6//X/AQABAAIAAAD5//X/AQABAAIAAAD4//X/AQABAAIAAAD3//X/AQABAAIAAAD2//X/AQABAAIAAAD1//X/AQAFAAAAAFD0//b/AQAHAAAAADD7//X/AQAHAAAAAGD8//b/AQAHAAAAAGD9//j/AQAAAAEAAAAAAP3/AQACAAEAAAAAAPz/AQACAAEAAAAAAPv/AQACAAEAAAAAAP7/AQACAAIAAAAAAPr/AQACAAEAAAABAPn/AQACAAIAAAACAPj/AQACAAIAAAACAPT/AQACAAAAAAACAPX/AQACAAEAAAACAPf/AQACAAEAAAACAPb/AQACAAEAAAABAPT/AQAAAAAAAAABAPX/AQAAAAEAAAABAPb/AQAAAAEAAAD+//f/AQABAAAAAAD///f/AQABAAAAAAAAAPf/AQABAAAAAAABAPf/AQAHAAAAAAD9//b/AQACAAEAAAD9//X/AQACAAEAAAD9//T/AQACAAAAAAD8//P/AQACAAEAAAD8//L/AQACAAEAAAD8//H/AQACAAEAAAD8//T/AQAHAAAAAFACAPL/AQACAAIAAAABAPL/AQAAAAIAAAACAPH/AQACAAEAAAACAPD/AQACAAEAAAACAO//AQACAAEAAAACAO7/AQAHAAAAADADAO7/AQACAAIAAAAEAO3/AQACAAIAAAAFAOz/AQABAAIAAAAGAO3/AQAAAAIAAAAIAO7/AQAAAAIAAAAHAO3/AQABAAIAAAAJAO//AQAAAAEAAAAJAPD/AQAAAAEAAAAIAPH/AQABAAAAAAAHAPH/AQABAAAAAAAGAPH/AQAAAAAAAAAGAPL/AQAAAAEAAAAJAPH/AQAHAAAAAAAJAO7/AQAHAAAAAGAIAO3/AQAHAAAAAGAGAOz/AQABAAEAAAAEAOz/AQAHAAAAADABAPH/AQAAAAEAAAABAPD/AQAAAAEAAAD+/+7/AQAEAAAAAGD//+7/AQAEAAEAAFAAAO7/AQAEAAEAAFABAO//AQAAAAEAAAABAO7/AQAGAAAAAGABAO3/AQAAAAEAAAABAOz/AQAAAAEAAAADAO3/AQAHAAAAADACAO3/AQABAAEAAAACAOz/AQABAAEAAAACAOv/AQABAAEAAAADAOv/AQABAAEAAAAEAOv/AQABAAEAAAAFAOv/AQABAAEAAAAGAOv/AQABAAEAAAAHAOv/AQABAAEAAAAIAOv/AQABAAEAAAAJAOv/AQABAAEAAAAKAOv/AQABAAEAAAAKAOz/AQABAAEAAAAKAO3/AQABAAEAAAAJAO3/AQABAAEAAAAJAOz/AQABAAEAAAAIAOz/AQABAAEAAAAHAOz/AQABAAEAAAADAOz/AQABAAEAAAACAOr/AQABAAEAAAACAOn/AQABAAEAAAADAOn/AQABAAEAAAAEAOn/AQABAAEAAAAFAOj/AQABAAEAAAAGAOj/AQABAAEAAAAHAOj/AQABAAEAAAAIAOn/AQABAAEAAAAJAOn/AQABAAEAAAAKAOn/AQABAAEAAAALAOn/AQABAAEAAAALAOr/AQABAAEAAAALAOv/AQABAAEAAAAJAOr/AQABAAEAAAAIAOr/AQABAAEAAAAHAOr/AQABAAEAAAAGAOr/AQABAAEAAAAFAOr/AQABAAEAAAAEAOr/AQABAAEAAAADAOr/AQABAAEAAAAFAOn/AQABAAEAAAAGAOn/AQABAAEAAAAHAOn/AQABAAEAAAAKAOr/AQABAAEAAAALAOz/AQABAAEAAAALAO3/AQABAAEAAAALAO7/AQABAAEAAAALAO//AQABAAEAAAAKAO//AQABAAEAAAAKAO7/AQABAAEAAAAKAPD/AQABAAEAAAAKAPH/AQABAAEAAAALAPH/AQABAAEAAAAMAPH/AQABAAEAAAALAPD/AQABAAEAAAABAOn/AQAAAAEAAAABAOr/AQAAAAEAAAABAOv/AQAAAAEAAAD8/+3/AQACAAEAAAD8/+7/AQACAAEAAAD8/+//AQACAAEAAAD8//D/AQACAAEAAAD8/+z/AQACAAEAAAD9/+v/AQAEAAEAAGD+/+v/AQAEAAEAAGD//+v/AQAEAAIAAGD8/+v/AQAGAAAAAFD8/+r/AQACAAAAAAD7/+n/AQACAAEAAAD7/+j/AQACAAEAAAD+/+j/AQAEAAIAAFD//+j/AQAEAAEAAFAAAOj/AQAEAAEAAFABAOj/AQAGAAAAAGABAOb/AQAAAAEAAAABAOf/AQAAAAEAAAABAOX/AQAAAAEAAAABAOT/AQAAAAEAAAABAOP/AQAAAAEAAAAAAOL/AQAAAAIAAAAAAN7/AQAAAAEAAAAAAN//AQAAAAEAAAAAAOD/AQAAAAEAAAAAAOH/AQAAAAEAAAAAANf/AQAAAAEAAAAAANj/AQAAAAEAAAAAANn/AQAAAAEAAAAAANr/AQAAAAEAAAAAANv/AQAAAAEAAAAAANz/AQAAAAEAAAAAAN3/AQAAAAEAAAD9/9f/AQACAAEAAAD9/9j/AQACAAEAAAD9/9n/AQACAAEAAAD9/9r/AQACAAEAAAD9/9v/AQACAAEAAAD9/9z/AQACAAEAAAD9/93/AQACAAEAAAD9/97/AQACAAEAAAD9/9//AQACAAEAAAD8/+T/AQACAAIAAAD9/+D/AQACAAIAAAD8/+H/AQACAAEAAAD8/+L/AQACAAEAAAD8/+P/AQACAAEAAAD7/+X/AQACAAEAAAD7/+b/AQACAAEAAAD7/+f/AQACAAEAAAA=")
 tile_set = SubResource("TileSet_pbcc1")
 
+[node name="Grab Particle" type="GPUParticles2D" parent="." unique_id=1818615570]
+position = Vector2(388, -299)
+scale = Vector2(2.1547945, 2.1547945)
+emitting = false
+amount = 6
+texture = ExtResource("4_2572e")
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_ymmnx")
+
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1523643988 node_paths=PackedStringArray("cursor_left", "cursor_right", "L_cast", "R_cast")]
 position = Vector2(594, -89)
 script = ExtResource("2_2572e")
 cursor_left = NodePath("Right Hand")
 cursor_right = NodePath("Left Hand")
-L_cast = NodePath("Right Hand/Cast R")
-R_cast = NodePath("Left Hand/Cast L")
+L_cast = NodePath("Left Hand/Cast L")
+R_cast = NodePath("Right Hand/Cast R")
 
-[node name="Left Hand" type="Sprite2D" parent="Player" unique_id=1509126014]
-position = Vector2(-206, -210)
-texture = ExtResource("3_r0a8b")
-
-[node name="Cast L" type="ShapeCast2D" parent="Player/Left Hand" unique_id=1742481431]
-scale = Vector2(6.4791236, 6.3357153)
-shape = SubResource("CircleShape2D_2572e")
-target_position = Vector2(0, 0)
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Player/Left Hand" unique_id=1818615570]
-rotation = -3.1415927
-amount = 6
-texture = ExtResource("3_r0a8b")
-explosiveness = 0.8
-process_material = SubResource("ParticleProcessMaterial_ymmnx")
-
-[node name="Right Hand" type="Sprite2D" parent="Player" unique_id=520437308]
-position = Vector2(233, -211)
-texture = ExtResource("3_r0a8b")
-
-[node name="Cast R" type="ShapeCast2D" parent="Player/Right Hand" unique_id=6372821]
-scale = Vector2(6.4791236, 6.3357153)
-shape = SubResource("CircleShape2D_2572e")
-target_position = Vector2(0, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1688917699]
+position = Vector2(0, -61)
+scale = Vector2(8.509201, 13.040426)
+shape = SubResource("CircleShape2D_ymmnx")
 
 [node name="ArmManager" type="Node2D" parent="Player" unique_id=1511799036 node_paths=PackedStringArray("L", "R", "L_start", "R_start")]
 script = ExtResource("5_e11kw")
 L = NodePath("../Left Hand")
 R = NodePath("../Right Hand")
-L_start = NodePath("../Torso/R Start")
-R_start = NodePath("../Torso/L Start")
+L_start = NodePath("../Torso/L Start")
+R_start = NodePath("../Torso/R Start")
 
 [node name="Line2D" type="Line2D" parent="Player/ArmManager" unique_id=1276704939]
-points = PackedVector2Array(0, 0, 0, 0, 0, 0)
+position = Vector2(163.00002, 107)
+rotation = -0.018177986
+scale = Vector2(-1, -1)
+points = PackedVector2Array(53.627502, -34.03084, 143.59454, 23.614025, 338.0351, 1.1445866)
 width = 80.0
-default_color = Color(0.7782636, 0.40036997, 0.19626772, 1)
-texture = ExtResource("3_r0a8b")
+texture = ExtResource("6_r0a8b")
 texture_mode = 2
 
 [node name="Line2D2" type="Line2D" parent="Player/ArmManager" unique_id=1727283143]
-points = PackedVector2Array(0, 0, 0, 0, 0, 0)
+position = Vector2(323, -50)
+points = PackedVector2Array(0, 0, 50, 50, 0, 0)
 width = 80.0
 default_color = Color(0.7764706, 0.4, 0.19607843, 1)
+texture = ExtResource("3_r0a8b")
+texture_mode = 2
+
+[node name="Left Hand" type="Sprite2D" parent="Player" unique_id=1509126014]
+position = Vector2(-206, -210)
+scale = Vector2(14.365295, 14.365295)
+texture = SubResource("AtlasTexture_r0a8b")
+
+[node name="Cast L" type="ShapeCast2D" parent="Player/Left Hand" unique_id=1742481431]
+scale = Vector2(0.15029943, 0.14697272)
+shape = SubResource("CircleShape2D_2572e")
+target_position = Vector2(0, 0)
+
+[node name="Right Hand" type="Sprite2D" parent="Player" unique_id=520437308]
+position = Vector2(233, -211)
+scale = Vector2(15, 15)
+texture = SubResource("AtlasTexture_e11kw")
+
+[node name="Cast R" type="ShapeCast2D" parent="Player/Right Hand" unique_id=6372821]
+scale = Vector2(0.15, 0.147)
+shape = SubResource("CircleShape2D_2572e")
+target_position = Vector2(0, 0)
 
 [node name="HandTracker" type="Node" parent="Player" unique_id=415470971]
 script = ExtResource("4_as6rc")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1688917699]
-position = Vector2(-0.9999995, 0.9999695)
-scale = Vector2(10.560001, 10.844807)
-shape = SubResource("CircleShape2D_ymmnx")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1903985026]
 position = Vector2(14, -274)
 zoom = Vector2(0.5, 0.5)
 
 [node name="Torso" type="Node2D" parent="Player" unique_id=1581721886]
+position = Vector2(2, 28)
+scale = Vector2(1.2733257, 1.2733257)
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/Torso" unique_id=1892306877]
-modulate = Color(0.7764706, 0.4, 0.19607843, 1)
-scale = Vector2(200, 300)
-texture = ExtResource("6_xqlu0")
+scale = Vector2(15.025785, 15.025785)
+texture = SubResource("AtlasTexture_as6rc")
 
 [node name="R Start" type="Node2D" parent="Player/Torso" unique_id=518352256]
 position = Vector2(-92, -133)
