@@ -49,8 +49,10 @@ position = Vector2(-0.9999995, 0.9999695)
 scale = Vector2(10.560001, 10.844807)
 shape = SubResource("CircleShape2D_6uqi0")
 
-[node name="ArmManager" type="Node2D" parent="Player" unique_id=615851955]
+[node name="ArmManager" type="Node2D" parent="Player" unique_id=615851955 node_paths=PackedStringArray("L", "R")]
 script = ExtResource("4_ppyta")
+L = NodePath("../Left Hand")
+R = NodePath("../Right Hand")
 
 [node name="Line2D" type="Line2D" parent="Player/ArmManager" unique_id=964303349]
 points = PackedVector2Array(0, 0, 0, 0)

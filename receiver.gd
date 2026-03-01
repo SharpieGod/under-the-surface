@@ -7,6 +7,9 @@ extends CharacterBody2D
 @export var cursor_right: Node2D
 @export var max_speed: float = 100.0
 @export var smooth_factor: float = 0.90
+@onready var torso = $Torso
+@export var L_cast: ShapeCast2D
+@export var R_cast: ShapeCast2D
 
 var _prev_closed: Dictionary = { true: false, false: false }
 var _smoothed_positions: Dictionary = {}
@@ -30,9 +33,12 @@ func _process(delta):
 		velocity = Vector2.ZERO
 	move_and_slide()
 	
+	print(torso.position)
+	
 
 func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	var cursor = cursor_left if is_left else cursor_right
+	var cast = L_cast if is_left else R_cast
 	
 	if not cursor:
 		return
@@ -55,8 +61,15 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	cursor.position = smoothed
 
 	var was_closed = _prev_closed[is_left]
-
-	if is_closed:
+	var in_wall = false
+	
+	if cast.is_colliding():
+		for i in cast.get_collision_count():
+			if cast.get_collider(i) is TileMapLayer:
+				in_wall = true
+				break
+	
+	if is_closed and not in_wall:
 		if not was_closed:
 			_grab[is_left] = {
 				"anchor_screen": smoothed,

@@ -3,10 +3,10 @@ extends Node2D
 #@export var rest_length: float = 20.0
 #@export var stiffness: float = 10.0
 #@export var damping: float = 2.0
-@onready var L: Sprite2D = $"../Left Hand"
-@onready var R: Sprite2D = $"../Right Hand"
-
-@onready var player = $"../Camera2D"
+@export var L: Sprite2D
+@export var R: Sprite2D
+@export var L_start: Node2D
+@export var R_start: Node2D
 
 @onready var armL: Line2D = $Line2D
 @onready var armR: Line2D = $Line2D2
@@ -40,5 +40,7 @@ func handle_grapple(delta: float) -> void:
 	update_rope()
 
 func update_rope():
+	armL.set_point_position(0, armL.to_local(L_start.global_position))
+	armR.set_point_position(0, armR.to_local(R_start.global_position))
 	armL.set_point_position(1, armL.to_local(L.global_position))
 	armR.set_point_position(1, armR.to_local(R.global_position))
