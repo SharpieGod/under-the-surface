@@ -79,9 +79,9 @@ func _on_hand_lost(is_left: bool):
 	var cursor = cursor_left if is_left else cursor_right
 	#if cursor:
 		#cursor.visible = false
-	#_grab.erase(is_left)
+	_grab.erase(is_left)	
 	#_smoothed_positions.erase(is_left)
-	#_prev_closed[is_left] = false
+	_prev_closed[is_left] = false
 
 func _update_cursor_state(cursor: Node2D, is_closed: bool):
 	cursor.scale = Vector2(0.2, 0.2) if is_closed else Vector2(1.2, 1.2)
