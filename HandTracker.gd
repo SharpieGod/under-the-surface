@@ -49,7 +49,7 @@ func _inject_mediapipe_js():
                 const handedness = results.multiHandedness || [];
                 window._handData = landmarks.map((lm, i) => ({
                     landmarks: lm,
-                    isLeft: handedness[i]?.label === "Left"
+					isLeft: handedness[i]?.label === "Left"
                 }));
             });
 

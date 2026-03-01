@@ -20,8 +20,8 @@ scale = Vector2(24836.146, 58639.063)
 texture = ExtResource("1_ykrsh")
 
 [node name="Wall" type="StaticBody2D" parent="." unique_id=1508608239]
-position = Vector2(775.0001, -226.00003)
-scale = Vector2(831.22534, 831.22534)
+position = Vector2(1377, -262.00006)
+scale = Vector2(831.22534, 832.86536)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall" unique_id=1169385268]
 position = Vector2(0.006616771, 0.0012030303)
@@ -31,16 +31,6 @@ shape = SubResource("RectangleShape2D_g14j6")
 
 [node name="Sprite2D" type="Sprite2D" parent="Wall" unique_id=1133050313]
 texture = ExtResource("1_ykrsh")
-
-[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1082793705]
-position = Vector2(-918, -1314.0001)
-scale = Vector2(9.959996, 9.959996)
-texture = ExtResource("2_8uh7m")
-
-[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1561835576]
-position = Vector2(833, -2176)
-scale = Vector2(9.959996, 9.959996)
-texture = ExtResource("2_8uh7m")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=372836337 node_paths=PackedStringArray("cursor_left", "cursor_right")]
 script = ExtResource("1_37kl0")
@@ -90,4 +80,72 @@ shape = SubResource("RectangleShape2D_g14j6")
 
 [node name="Sprite2D" type="Sprite2D" parent="Wall2" unique_id=1265506919]
 modulate = Color(0.28, 0.100146666, 0.016800001, 1)
+texture = ExtResource("1_ykrsh")
+
+[node name="Wall3" type="StaticBody2D" parent="." unique_id=744351226]
+position = Vector2(-781.00006, -1021.0001)
+rotation = 0.20587645
+scale = Vector2(831.22534, 831.22534)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3" unique_id=1864463898]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall3" unique_id=1732502351]
+texture = ExtResource("1_ykrsh")
+
+[node name="Wall6" type="StaticBody2D" parent="." unique_id=1646866250]
+position = Vector2(-2722, -1086)
+scale = Vector2(3329.897, 845.9054)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall6" unique_id=156419214]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall6" unique_id=1542818268]
+texture = ExtResource("1_ykrsh")
+
+[node name="Wall7" type="StaticBody2D" parent="." unique_id=932947883]
+position = Vector2(1172, -1932)
+rotation = 1.2703826
+scale = Vector2(3329.897, 845.9054)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall7" unique_id=554513522]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall7" unique_id=1874570079]
+texture = ExtResource("1_ykrsh")
+
+[node name="Wall4" type="StaticBody2D" parent="." unique_id=1436105628]
+position = Vector2(788.0004, -1117.9999)
+rotation = 0.20587645
+scale = Vector2(831.22534, 831.22534)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4" unique_id=1809340970]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall4" unique_id=1532615206]
+texture = ExtResource("1_ykrsh")
+
+[node name="Wall5" type="StaticBody2D" parent="." unique_id=965540425]
+position = Vector2(-1437, -246)
+scale = Vector2(579.4497, 1388.4626)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall5" unique_id=979317938]
+position = Vector2(0.006616771, 0.0012030303)
+rotation = -3.1415925
+scale = Vector2(0.06550122, 0.06550122)
+shape = SubResource("RectangleShape2D_g14j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall5" unique_id=1441033544]
 texture = ExtResource("1_ykrsh")

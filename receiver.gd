@@ -84,4 +84,4 @@ func _on_hand_lost(is_left: bool):
 	#_prev_closed[is_left] = false
 
 func _update_cursor_state(cursor: Node2D, is_closed: bool):
-	cursor.scale = Vector2(0.6, 0.6) if is_closed else Vector2(1.0, 1.0)
+	cursor.scale = Vector2(0.2, 0.2) if is_closed else Vector2(1.2, 1.2)
