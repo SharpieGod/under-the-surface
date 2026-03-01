@@ -95,6 +95,25 @@ sources/1 = SubResource("TileSetAtlasSource_mq32o")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2572e"]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ymmnx"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(5, 5, 1)
+emission_shape = 1
+emission_sphere_radius = 50.0
+angle_min = -257.69998
+angle_max = 87.80001
+direction = Vector3(1, 1, 0)
+spread = 90.0
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 1000, 0)
+turbulence_noise_strength = 14.07
+turbulence_noise_speed_random = 3.8
+turbulence_influence_min = 1.0
+turbulence_influence_max = 1.0
+turbulence_initial_displacement_min = 100.0
+turbulence_initial_displacement_max = 100.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_ymmnx"]
 
 [node name="Node2D" type="Node2D" unique_id=1763086505]
@@ -129,11 +148,12 @@ scale = Vector2(6.4791236, 6.3357153)
 shape = SubResource("CircleShape2D_2572e")
 target_position = Vector2(0, 0)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Player/Left Hand" unique_id=247859726]
-scale = Vector2(2.1061528, 2.1061528)
-emitting = false
-texture = ExtResource("6_xqlu0")
-one_shot = true
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Player/Left Hand" unique_id=1818615570]
+rotation = -3.1415927
+amount = 6
+texture = ExtResource("3_r0a8b")
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_ymmnx")
 
 [node name="Right Hand" type="Sprite2D" parent="Player" unique_id=520437308]
 position = Vector2(233, -211)
