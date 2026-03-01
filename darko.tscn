@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://baj2hapdg7q8p"]
+[gd_scene format=4 uid="uid://tpbjuy63ypa"]
 
 [ext_resource type="Texture2D" uid="uid://3u1ql4quq38h" path="res://platformertiles (1).png" id="1_ymmnx"]
 [ext_resource type="Script" uid="uid://3ophl5lc8d8w" path="res://receiver.gd" id="2_2572e"]
