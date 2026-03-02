@@ -85,7 +85,7 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	if is_closed:
 		if not was_closed and not in_wall:
 			_grab[is_left] = {
-				"anchor_screen": smoothed,
+				"anchor_screen": clamped,
 				"anchor_self": global_position
 			}
 			if randi_range(0,2) == 1:
@@ -118,7 +118,7 @@ func _on_hand_lost(is_left: bool):
 
 func _update_cursor_state(cursor: Node2D, circle: Node2D, is_left, is_closed: bool):
 	cursor.scale = Vector2(15, 15)
-	circle.scale = Vector2.ONE * (0.7 if is_closed else 1)
+	circle.scale = Vector2.ONE * (8 if is_closed else 11)
 	var closed = L_closed if is_left else R_closed
 	var open = L_open if is_left else R_open
 	cursor.texture = closed if not is_closed else open
