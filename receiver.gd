@@ -53,7 +53,7 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	if not cursor:
 		return
 	
-	var world_pos = _screen_to_world(position) * 2
+	var world_pos = _screen_to_world(position) * 1.3
 	circle.position = world_pos
 
 	var smoothed: Vector2
