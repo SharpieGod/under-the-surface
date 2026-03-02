@@ -18,6 +18,7 @@ extends CharacterBody2D
 @export var L_open: Texture2D
 @export var L_closed: Texture2D
 @export var R_circle: Node2D
+@export var L_circle: Node2D
 
 
 var _prev_closed: Dictionary = { true: false, false: false }
@@ -45,7 +46,7 @@ func _process(delta):
 
 func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	var cursor = cursor_left if not is_left else cursor_right
-	var circle = R_circle
+	var circle = L_circle if is_left else R_circle
 	var cast = L_cast if is_left else R_cast
 	var start = L_start if is_left else R_start
 	
@@ -62,13 +63,15 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	else:
 		smoothed = world_pos
 		
-	if (smoothed - start.position).length() > 600:
-		smoothed = (smoothed - start.position).normalized() * 600 + start
-		
 	_smoothed_positions[is_left] = smoothed
 
 	cursor.visible = true
-	cursor.position = smoothed
+	
+	var clamped = smoothed
+	if (smoothed - start.position).length() > 600:
+		clamped = (smoothed - start.position).normalized() * 600 + start.position
+
+	cursor.position = clamped
 
 	var was_closed = _prev_closed[is_left]
 	var in_wall = false
@@ -93,7 +96,7 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 				get_tree().create_timer(particle_instance.lifetime * particle_instance.amount_ratio + 0.1).timeout.connect(particle_instance.queue_free)
 				
 		if is_left in _grab:
-			var delta = smoothed - _grab[is_left]["anchor_screen"]
+			var delta = clamped - _grab[is_left]["anchor_screen"]
 			var desired_pos = _grab[is_left]["anchor_self"] - delta
 			var move = desired_pos - global_position
 			if move.length() > max_speed:
@@ -103,7 +106,7 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 		_grab.erase(is_left)
 
 	_prev_closed[is_left] = is_closed
-	_update_cursor_state(cursor, is_left, is_closed)
+	_update_cursor_state(cursor, circle, is_left, is_closed)
 
 func _on_hand_lost(is_left: bool):
 	var cursor = cursor_left if is_left else cursor_right
@@ -113,8 +116,9 @@ func _on_hand_lost(is_left: bool):
 	_smoothed_positions.erase(is_left)
 	_prev_closed[is_left] = false
 
-func _update_cursor_state(cursor: Node2D, is_left, is_closed: bool):
+func _update_cursor_state(cursor: Node2D, circle: Node2D, is_left, is_closed: bool):
 	cursor.scale = Vector2(15, 15)
+	circle.scale = Vector2.ONE * (0.7 if is_closed else 1)
 	var closed = L_closed if is_left else R_closed
 	var open = L_open if is_left else R_open
 	cursor.texture = closed if not is_closed else open

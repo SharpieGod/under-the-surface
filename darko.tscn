@@ -278,7 +278,7 @@ one_shot = true
 explosiveness = 0.8
 process_material = SubResource("ParticleProcessMaterial_ymmnx")
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1523643988 node_paths=PackedStringArray("cursor_left", "cursor_right", "L_cast", "R_cast", "R_circle")]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1523643988 node_paths=PackedStringArray("cursor_left", "cursor_right", "L_cast", "R_cast", "R_circle", "L_circle")]
 position = Vector2(252, -527)
 script = ExtResource("2_2572e")
 cursor_left = NodePath("Right Hand")
@@ -290,6 +290,7 @@ R_closed = ExtResource("7_qkr4e")
 L_open = ExtResource("8_xqlu0")
 L_closed = ExtResource("5_genal")
 R_circle = NodePath("R Circle")
+L_circle = NodePath("L Circle")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1688917699]
 position = Vector2(0, -61)
@@ -365,6 +366,11 @@ position = Vector2(-57.817295, -107.11415)
 position = Vector2(68.16354, -107.11416)
 
 [node name="R Circle" type="Sprite2D" parent="Player" unique_id=1525556007]
+position = Vector2(-356, -219)
+scale = Vector2(10.844132, 10.844132)
+texture = ExtResource("13_qkr4e")
+
+[node name="L Circle" type="Sprite2D" parent="Player" unique_id=736714716]
 position = Vector2(-356, -219)
 scale = Vector2(10.844132, 10.844132)
 texture = ExtResource("13_qkr4e")
