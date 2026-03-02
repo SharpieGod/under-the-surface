@@ -17,6 +17,7 @@ extends CharacterBody2D
 @export var R_closed: Texture2D
 @export var L_open: Texture2D
 @export var L_closed: Texture2D
+@export var R_circle: Node2D
 
 
 var _prev_closed: Dictionary = { true: false, false: false }
@@ -44,12 +45,15 @@ func _process(delta):
 
 func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	var cursor = cursor_left if not is_left else cursor_right
+	var circle = R_circle
 	var cast = L_cast if is_left else R_cast
 	var start = L_start if is_left else R_start
+	
 	if not cursor:
 		return
-
-	var world_pos = _screen_to_world(position) * 1.5
+	
+	var world_pos = _screen_to_world(position) * 2
+	circle.position = world_pos
 
 	var smoothed: Vector2
 	
