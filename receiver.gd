@@ -71,7 +71,7 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	
 	if cast.is_colliding():
 		for i in cast.get_collision_count():
-			if cast.get_collider(i).name == "Foreground":
+			if cast.get_collider(i).name == "Foreground" or cast.get_collider(i).name == "SKY":
 				in_wall = true
 				break
 	
