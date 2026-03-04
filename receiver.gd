@@ -8,8 +8,6 @@ extends CharacterBody2D
 @export var max_speed: float = 100.0
 @export var smooth_factor: float = 0.90
 @onready var torso = $Torso
-@export var L_cast: ShapeCast2D
-@export var R_cast: ShapeCast2D
 @onready var R_start = $"Torso/R Start"
 @onready var L_start = $"Torso/L Start"
 
@@ -19,6 +17,9 @@ extends CharacterBody2D
 @export var L_closed: Texture2D
 @export var R_circle: Node2D
 @export var L_circle: Node2D
+
+@export var R_cast: RayCast2D
+@export var L_cast: RayCast2D
 
 
 var _prev_closed: Dictionary = { true: false, false: false }
@@ -66,29 +67,35 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	_smoothed_positions[is_left] = smoothed
 
 	cursor.visible = true
+	circle.visible = true
 	
 	var clamped = smoothed
-	if (smoothed - start.position).length() > 600:
-		clamped = (smoothed - start.position).normalized() * 600 + start.position
+	
+	if (clamped - start.position).length() > 600:
+		clamped = (clamped - start.position).normalized() * 600 + start.position
+		
+	var start_global = global_position
+	var clamped_global = to_global(clamped)
+
+	cast.global_position = start_global
+	cast.collision_mask = 2
+	cast.target_position = cast.to_local(clamped_global)
+	cast.force_raycast_update()
+
+	if cast.is_colliding():
+		clamped = to_local(cast.get_collision_point())
 
 	cursor.position = clamped
 
 	var was_closed = _prev_closed[is_left]
-	var in_wall = false
-	
-	if cast.is_colliding():
-		for i in cast.get_collision_count():
-			if cast.get_collider(i).name == "Foreground" or cast.get_collider(i).name == "SKY":
-				in_wall = true
-				break
 	
 	if is_closed:
-		if not was_closed and not in_wall:
+		if not was_closed:
 			_grab[is_left] = {
 				"anchor_screen": clamped,
 				"anchor_self": global_position
 			}
-			if randi_range(0,2) == 1:
+			if randi_range(0,1) == 1:
 				var particle_instance = grab_particle.duplicate()
 				get_tree().current_scene.add_child(particle_instance)
 				particle_instance.global_position = cursor.global_position 
@@ -109,12 +116,14 @@ func _on_hand_updated(is_left: bool, position: Vector2, is_closed: bool):
 	_update_cursor_state(cursor, circle, is_left, is_closed)
 
 func _on_hand_lost(is_left: bool):
-	var cursor = cursor_left if is_left else cursor_right
+	var cursor = cursor_left if not is_left else cursor_right
+	var circle = L_circle if is_left else R_circle
 	if cursor:
 		cursor.visible = false
 	_grab.erase(is_left)
 	_smoothed_positions.erase(is_left)
 	_prev_closed[is_left] = false
+	circle.visible = false
 
 func _update_cursor_state(cursor: Node2D, circle: Node2D, is_left, is_closed: bool):
 	cursor.scale = Vector2(15, 15)

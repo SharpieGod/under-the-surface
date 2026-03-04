@@ -200,7 +200,7 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_pbcc1"]
 tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
 sources/1 = SubResource("TileSetAtlasSource_mq32o")
 
 [sub_resource type="Curve" id="Curve_ymmnx"]
@@ -278,19 +278,19 @@ one_shot = true
 explosiveness = 0.8
 process_material = SubResource("ParticleProcessMaterial_ymmnx")
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1523643988 node_paths=PackedStringArray("cursor_left", "cursor_right", "L_cast", "R_cast", "R_circle", "L_circle")]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1523643988 node_paths=PackedStringArray("cursor_left", "cursor_right", "R_circle", "L_circle", "R_cast", "L_cast")]
 position = Vector2(252, -527)
 script = ExtResource("2_2572e")
 cursor_left = NodePath("Right Hand")
 cursor_right = NodePath("Left Hand")
-L_cast = NodePath("Left Hand/Cast L")
-R_cast = NodePath("Right Hand/Cast R")
 R_open = ExtResource("7_e11kw")
 R_closed = ExtResource("7_qkr4e")
 L_open = ExtResource("8_xqlu0")
 L_closed = ExtResource("5_genal")
 R_circle = NodePath("R Circle")
 L_circle = NodePath("L Circle")
+R_cast = NodePath("R Cast")
+L_cast = NodePath("L Cast")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1688917699]
 position = Vector2(0, -61)
@@ -349,6 +349,14 @@ script = ExtResource("4_as6rc")
 position = Vector2(14, -274)
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
+
+[node name="R Cast" type="RayCast2D" parent="Player" unique_id=407455186]
+position = Vector2(-93, -148)
+scale = Vector2(1.6431068, 1.6431068)
+
+[node name="L Cast" type="RayCast2D" parent="Player" unique_id=982744408]
+position = Vector2(114, -148)
+scale = Vector2(1.6431068, 1.6431068)
 
 [node name="Torso" type="Node2D" parent="Player" unique_id=1581721886]
 position = Vector2(2, 28)
