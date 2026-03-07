@@ -10,7 +10,9 @@ func _ready():
 	if not OS.has_feature("web"):
 		push_warning("Hand tracking only works in Web export!")
 		return
+	
 	_inject_mediapipe_js()
+	
 
 func _inject_mediapipe_js():
 	JavaScriptBridge.eval("""
@@ -68,6 +70,7 @@ func _inject_mediapipe_js():
 	""", true)
 
 func _process(_delta):
+	
 	if not OS.has_feature("web"):
 		return
 
@@ -93,7 +96,7 @@ func _process(_delta):
 		emit_signal("hand_lost", true)
 	if prev_rights.size() > 0 and cur_rights.size() == 0:
 		emit_signal("hand_lost", false)
-
+	
 	_process_hands()
 
 func _process_hands():
@@ -109,6 +112,7 @@ func _process_hands():
 
 		var closed = _is_hand_closed(landmarks)
 		emit_signal("hand_updated", is_left, screen_pos, closed)
+		print("emitting hand_updated", is_left, screen_pos)
 
 func _is_hand_closed(landmarks: Array) -> bool:
 	var finger_pairs = [
